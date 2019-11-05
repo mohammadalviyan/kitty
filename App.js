@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import {
-  View
-} from 'react-native';
-
 import store from './src/redux/store';
+import Boarding from './src/screens/onboarding/index';
 
-const App = () => {
-  return (
-    <Provider store={store}>
-      <View>
+import { AppRegistry, StatusBar } from "react-native";
 
-      </View>
-    </Provider>
-  );
+export default class App extends Component {
+  componentDidMount() {
+    StatusBar.setHidden(true);
+  }
+  render(){
+    return (
+      <Provider store={store}>
+        <Boarding />
+      </Provider>
+    );
+  }
 };
 
-export default App;
+AppRegistry.registerComponent('App', () => App);
