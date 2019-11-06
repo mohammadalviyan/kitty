@@ -41,14 +41,14 @@ const Auth = (state = initialState, action) => {
             };
         case 'POST_LOGIN_REJECTED':
             return{
+                ...state,
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false
             };
         case 'POST_LOGIN_FULFILLED':
-            const token = action.payload.data.result.token;
-            localStorage.setItem("x-access-token", token);
             return{
+                ...state,
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,

@@ -5,6 +5,7 @@ import Boarding from './onboarding/index';
 import UI from './login/index';
 import Login from './login/login';
 import Register from './login/register';
+import Dashboard from './main/index';
 
 const StackAuth = createStackNavigator({
     UI,
@@ -18,7 +19,8 @@ const StackAuth = createStackNavigator({
 
 const Router = createSwitchNavigator({
     Boarding,
-    StackAuth
+    StackAuth,
+    Dashboard
 },
 {
     initialRouteName: "Boarding",

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import store from './src/redux/store';
 import Router from './src/screens/router';
-
-import { AppRegistry, StatusBar } from "react-native";
+// import MainIndex from './src/screens/main/index';
+import { StatusBar } from "react-native";
 
 export default class App extends Component {
   componentDidMount() {
@@ -13,9 +13,8 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <Router />
+        {/* <MainIndex /> */}
       </Provider>
     );
   }
 };
-
-AppRegistry.registerComponent('App', () => App);
