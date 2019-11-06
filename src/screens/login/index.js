@@ -1,42 +1,27 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,   // CSS-like styles
-  Text,         // Renders text
-  View          // Container component
+import {         // Renders text
+  View,
+  Image          // Container component
 } from 'react-native';
+import { Button, Text } from 'native-base';
 
-export default class Screens extends Component {
+import styles from './styles';
+
+export default class UI extends Component {
   render() {
     return (
-      <View style={[styles.slide, { backgroundColor: '#C04DEE' }]}>
-        <Text style={styles.header}>EAT</Text>
-        <Text style={styles.text}>Good nutrition is an important part of leading a healthy lifestyle</Text>
+      <View style={styles.wrap} navigation={this.props.navigation}>
+        <View>
+          <Text style={styles.txtTitle}>Kitty.</Text>
+          <Image style={styles.imgUi} source={require("../../assets/images/cake_ui.png")} />
+          <Button style={styles.btnLogin} onPress={() => this.props.navigation.navigate("Login")}>
+            <Text style={styles.textbtn}>Login</Text>
+          </Button>
+          <Button style={styles.btnRegister}>
+            <Text style={styles.textbtn} onPress={() => this.props.navigation.navigate("Register")}>Register</Text>
+          </Button>
+        </View>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  // Slide styles
-  slide: {
-    flex: 1,                    // Take up all screen
-    justifyContent: 'center',   // Center vertically
-    alignItems: 'center',       // Center horizontally
-  },
-  // Header styles
-  header: {
-    color: '#FFFFFF',
-    fontFamily: 'Avenir',
-    fontSize: 30,
-    fontWeight: 'bold',
-    marginVertical: 15,
-  },
-  // Text below header
-  text: {
-    color: '#FFFFFF',
-    fontFamily: 'Avenir',
-    fontSize: 18,
-    marginHorizontal: 40,
-    textAlign: 'center',
-  },
-});
