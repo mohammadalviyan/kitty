@@ -20,6 +20,8 @@ export default class UI extends Component {
           <Button style={styles.btnRegister}>
             <Text style={styles.textbtn} onPress={() => this.props.navigation.navigate("Register")}>Register</Text>
           </Button>
+          <Text style={styles.txtAgreement}>By continue you agree to our</Text>
+          <Text style={styles.txtAgreementDown}>Term & Privacy Policy</Text>
         </View>
       </View>
     );

@@ -44,6 +44,16 @@ const styles = {
         width: 240,
         fontWeight: "bold"
     },
+    txtAgreement: {
+      marginTop: 25,
+      fontSize: 13,
+      textAlign: 'center',
+    },
+    txtAgreementDown: {
+      fontSize: 13,
+      textAlign: 'center',
+      fontWeight: 'bold',
+    },
     //-----------------------Login Style-----------------------//
     txtTitleLogin: {
       color: '#333333',
