@@ -19,6 +19,7 @@ export const postCategory = (input) => {
 };
 
 export const updateCategory = (input) => {
+    console.log(input.category_id)
     return{
         type: 'UPDATE_CATEGORIES',
         payload: axios.put(`https://sweet-bread.herokuapp.com/category/${input.category_id}`, input, {headers: {'x-access-token': token}})
@@ -26,8 +27,9 @@ export const updateCategory = (input) => {
 };
 
 export const deleteCategory = (input) => {
+    const id=input
     return{
         type: 'DELETE_CATEGORIES',
-        payload: axios.delete(`https://sweet-bread.herokuapp.com/category/${input.category_id}`, {headers: {'x-access-token': token}})
+        payload: axios.delete(`https://sweet-bread.herokuapp.com/category/`+id, {headers: {'x-access-token': token}})
     };
 };

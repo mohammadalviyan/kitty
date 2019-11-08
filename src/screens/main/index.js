@@ -2,6 +2,7 @@ import React from 'react';
 import { Image } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack';
 
 import Dashboard from './dashboard/dashboard';
 import Product from './product/product';
@@ -39,7 +40,7 @@ const TabNavigator = createBottomTabNavigator({
       navigationOptions: {
         tabBarLabel: 'Profile',
       }
-    },
+    }
   },{
     //router config
     initialRouteName: 'Dashboard',
@@ -73,6 +74,6 @@ const TabNavigator = createBottomTabNavigator({
       },   
     }),
   })
-  
+
   const TabNavigation = createAppContainer(TabNavigator);
   export default TabNavigation;

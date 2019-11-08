@@ -1,16 +1,61 @@
-import React, { Component } from 'react';
-import { useSelector} from 'react-redux';
-import { View, Text, SafeAreaView, ScrollView, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch} from 'react-redux';
+import { View, Text, SafeAreaView, ScrollView, Image, TouchableOpacity, Alert } from 'react-native';
+import { deleteCategory, getCategories } from '../../../redux/actions/category';
 
 const Category = (props) => {
     const dataCategories = useSelector(state => state.category.categoryList);
+    const dispatch = useDispatch()
+    const [input, setInput] = useState({ category_id:"",name:"" });
+    const fetchddata=async()=>{
+      await dispatch(getCategories (input))
+      .then(result => {
+        
+      })
+      .catch(err => {
+        alert(err);
+      });
+    }
   
+    useEffect(()=>{
+      fetchddata()
+    },[])
+
+    const handleSubmitdelete = async (id) => {
+      console.log(id)
+      try {
+        await dispatch(deleteCategory(id))
+      } catch (err) {
+        console.log(err)
+      }
+    };
+
+    const onShow=(item)=>{
+      Alert.alert(
+        'Delete This Item?',
+        item.name,
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', 
+            onPress: () =>  handleSubmitdelete(item.category_id)},
+            
+        ],
+        {cancelable: false},
+      );
+      
+    }
   return(
     <View style={{ flex: 1, backgroundColor: '#EEECEE' }}>
         <View style={{flexDirection: 'column'}}>
           <View style={{marginHorizontal: 17, marginTop: 30, height: 40, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
             <Text style={{fontSize: 20, fontWeight: 'bold'}}>Category</Text>
-            <Image style={{width: 25, height: 25}} source={require('../../../assets/icon/icon-sorting.png')} />
+            <TouchableOpacity onPress={() => props.navigation.navigate("AddCategory")}>
+            <Image style={{width: 35, height: 35}} source={require('../../../assets/icon/icon-add.png')}/>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={{flexDirection: 'column', flex: 1, marginTop: 50}}>
@@ -25,12 +70,17 @@ const Category = (props) => {
                           <View style={{flexDirection: 'row'}}>
                               <Text style={{width: 185, fontSize: 12}}>50 stock || Rp.5000</Text>
                               <View style={{flexDirection: 'column'}}>
-                              <TouchableOpacity
-                                  style={{width: 50, height: 25, backgroundColor: '#2196F3', borderRadius: 10, alignItems: 'center', justifyContent: 'center', marginBottom: 5,}}
+                              <TouchableOpacity onPress={() =>
+                                      props.navigation.navigate('EditCategory',{
+                                        name:item.name,
+                                        id:item.category_id
+                                      })
+                                    }
+                                  style={{width: 50, height: 25, backgroundColor: '#00BFFF', borderRadius: 10, alignItems: 'center', justifyContent: 'center', marginBottom: 5,}}
                               >
                                   <Text style={{fontSize: 11, color: '#fff', fontFamily: 'roboto'}}>Update</Text>
                               </TouchableOpacity>
-                              <TouchableOpacity
+                              <TouchableOpacity onPress={()=>{onShow(item)}}
                                   style={{width: 50, height: 25, backgroundColor: '#E95E8B', borderRadius: 10, alignItems: 'center', justifyContent: 'center'}}
                               >
                                   <Text style={{fontSize: 11, color: '#fff', fontFamily: 'roboto'}}>Delete</Text>

@@ -26,8 +26,9 @@ export const updateProduct = (input) => {
 };
 
 export const deleteProducts = (input) => {
+    const id=input
     return{
         type: 'DELETE_PRODUCTS',
-        payload: axios.delete(`https://sweet-bread.herokuapp.com/product/${input.product_id}`, {headers: {'x-access-token': token}})
+        payload: axios.delete(`https://sweet-bread.herokuapp.com/product/`+id, {headers: {'x-access-token': token}})
     };
 };

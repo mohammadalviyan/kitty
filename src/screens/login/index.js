@@ -11,7 +11,7 @@ import styles from './styles';
 export default class UI extends Component {
   
   render() {
-    AsyncStorage.getItem('token', () => {}).then((token) => {if (token !== null) this.props.navigation.navigate('IndexMain');});
+    AsyncStorage.getItem('token', () => {}).then((token) => {if (token !== null) this.props.navigation.navigate('StackHome');});
     return (
       <View style={styles.wrap} navigation={this.props.navigation}>
         <View>

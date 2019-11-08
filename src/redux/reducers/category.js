@@ -48,7 +48,8 @@ const Category = (state = initialState, action) => {
         };
         case 'POST_CATEGORIES_FULFILLED':
             const pushNew = state.categoryList.slice(0)
-            pushNew.push(action.payload.data.result[0])   
+            pushNew.push(action.payload.data.result[0])
+            console.log(pushNew)   
             return{
                 ...state,
                 isLoading: false,

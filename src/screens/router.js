@@ -6,6 +6,10 @@ import UI from './login/index';
 import Login from './login/login';
 import Register from './login/register';
 import IndexMain from './main/index';
+import AddCategory from './main/category/addFormCategory';
+import EditCategory from './main/category/editFormCategory';
+import AddProduct from './main/product/addFormProduct';
+import EditProduct from './main/product/editFormProduct';
 
 const StackAuth = createStackNavigator({
     UI,
@@ -17,10 +21,22 @@ const StackAuth = createStackNavigator({
     headerMode: "none"
 });
 
+const StackHome = createStackNavigator({
+    IndexMain,
+    AddCategory,
+    EditCategory,
+    AddProduct,
+    EditProduct
+},
+{
+    initialRouteName: "IndexMain",
+    headerMode: "none"
+});
+
 const Router = createSwitchNavigator({
     Boarding,
     StackAuth,
-    IndexMain
+    StackHome
 },
 {
     initialRouteName: "Boarding",
