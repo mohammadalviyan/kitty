@@ -3,12 +3,15 @@ import {         // Renders text
   View,
   Image          // Container component
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Button, Text } from 'native-base';
 
 import styles from './styles';
 
 export default class UI extends Component {
+  
   render() {
+    AsyncStorage.getItem('token', () => {}).then((token) => {if (token !== null) this.props.navigation.navigate('IndexMain');});
     return (
       <View style={styles.wrap} navigation={this.props.navigation}>
         <View>

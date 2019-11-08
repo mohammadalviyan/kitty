@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import {         // Renders text
   View,
-  Image,          // Container component
-  AsyncStorage
+  Image
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Button, Text, Item, Input } from 'native-base';
 import { connect } from 'react-redux';
 import { onLogin } from '../../redux/actions/auth';
@@ -26,7 +26,7 @@ const Login = (props) => {
             AsyncStorage.setItem('token', response.value.data.result.token, () => {});
             AsyncStorage.setItem('user', response.value.data.result.username, () => {});
             alert("Welcome back " + response.value.data.result.username);
-            props.navigation.navigate('Dashboard');
+            props.navigation.navigate('IndexMain');
           } else {
             alert(response.value.data.message);
           }
@@ -36,7 +36,6 @@ const Login = (props) => {
         })
   }
 
-  AsyncStorage.getItem('token', () => {}).then((token) => {if (token !== null) props.navigation.navigate('Dashboard');});
   return (
     <View style={styles.wrap}>
       <View>

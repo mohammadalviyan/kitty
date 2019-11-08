@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-const Profile = () => {
+const History = () => {
     return(
-        <Text>Hello profile</Text>
+        <Text>Hello history</Text>
     )
 }
 
-export default Profile;
+export default History;

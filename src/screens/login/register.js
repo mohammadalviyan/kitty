@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import {         // Renders text
   View,
-  Image,
-  AsyncStorage          // Container component
+  Image        // Container component
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { Button, Text, Item, Input } from 'native-base';
 import { connect } from 'react-redux';
 import { onRegister } from '../../redux/actions/auth';
@@ -34,8 +35,6 @@ const Register = (props) => {
           alert(error.value.data.message)
         })
   }
-
-  AsyncStorage.getItem('token', () => {}).then((token) => {if (token !== null) props.navigation.navigate('Dashboard');});
 
   return (
     <View style={styles.wrap}>

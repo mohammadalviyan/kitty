@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-const Profile = () => {
+const Category = () => {
     return(
-        <Text>Hello profile</Text>
+        <Text>Hello</Text>
     )
 }
 
-export default Profile;
+export default Category;
