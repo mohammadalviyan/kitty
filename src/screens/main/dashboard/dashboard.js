@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect} from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import {
     View,
     Text,
@@ -9,12 +10,25 @@ import {
     TouchableOpacity
 } from 'react-native';
 import styles from '../styles';
+import { getProducts } from '../../../redux/actions/product';
+import { getCategories } from '../../../redux/actions/category';
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+    const dataProducts = useSelector(state => state.product.productList);
+    const dataCategories = useSelector(state => state.category.categoryList);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getProducts())
+    }, [])
+    useEffect(() => {
+        dispatch(getCategories())
+    }, [])
+    
     return(
         <View style={styles.container}>
             <SafeAreaView>
-                <ScrollView showsHorizontalScrollIndicator={false}>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.header}>
                         {/* Header */}
                         <View style={styles.headercontainer}>
@@ -81,22 +95,19 @@ const Dashboard = () => {
                         {/* Title show */}
                         <View style={{marginHorizontal: 17, flexDirection: 'row', justifyContent: 'space-between',paddingTop: 30,}}>
                             <Text style={{fontSize: 18, fontFamily: 'Roboto'}}>Popular cake</Text>
-                            <TouchableOpacity
-                                style={{width: 60, backgroundColor: '#2196F3', borderRadius: 10, alignItems: 'center', justifyContent: 'center'}}
-                            >
-                                <Text style={{fontSize: 11, color: '#fff', fontFamily: 'roboto'}}>MORE</Text>
-                            </TouchableOpacity>
+                            
                         </View>
                         {/* product */}
-                        <View style={{marginHorizontal: 17, flexDirection: 'column'}}>
-                            <View style={{borderWidth: 0.8,borderColor: 'grey', height: 80, marginTop: 15, borderRadius: 10, paddingVertical: 15, paddingHorizontal: 5, flexDirection: 'row'}}>
-                                <Image style={{width: 50, height: 50}} source={require('../../../assets/icon/icon-hand.png')}/>
+                        {dataProducts.map((item, index) => (
+                        <View style={{marginHorizontal: 17, flexDirection: 'column'}} key={index}>
+                            <View style={{borderWidth: 0.3,borderColor: 'grey', height: 80, marginTop: 15, borderRadius: 10, paddingVertical: 4, paddingHorizontal: 3, flexDirection: 'row'}}>
+                                <Image style={{width: 70, height: 70, borderRadius: 4}} source={{uri: item.image}}/>
                                 <View style={{marginHorizontal: 10, flexDirection: 'column'}}>
-                                    <Text>Hello</Text>
+                                    <Text>{item.name}</Text>
                                     <View style={{flexDirection: 'row'}}>
-                                        <Text style={{width: 190}}>Shjhjhjhjhahhhhghghghgmantakj</Text>
+                                        <Text style={{width: 185}}>Rp.{item.price}</Text>
                                         <TouchableOpacity
-                                            style={{width: 60, height: 25, backgroundColor: '#2196F3', borderRadius: 10, alignItems: 'center', justifyContent: 'center'}}
+                                            style={{width: 50, height: 25, backgroundColor: '#E95E8B', borderRadius: 10, alignItems: 'center', justifyContent: 'center'}}
                                         >
                                             <Text style={{fontSize: 11, color: '#fff', fontFamily: 'roboto'}}>Add</Text>
                                         </TouchableOpacity>
@@ -104,6 +115,7 @@ const Dashboard = () => {
                                 </View>
                             </View>
                         </View>
+                        ))}
                     </View>
                 </ScrollView>
             </SafeAreaView>

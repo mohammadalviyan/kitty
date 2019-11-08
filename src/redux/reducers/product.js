@@ -7,7 +7,7 @@ const initialState = {
 }
 
 // Get product reducer
-const Product = (state = initialState, action) => {
+const Products = (state = initialState, action) => {
     switch(action.type) {
         case 'GET_PRODUCTS_PENDING':
             return{
@@ -23,7 +23,7 @@ const Product = (state = initialState, action) => {
                 isRejected: true,
                 isFullfilled: false
             };
-        case 'GET_PRODUCTS_FULFILLED':   
+        case 'GET_PRODUCTS_FULFILLED':  
             return{
                 ...state,
                 isLoading: false,
@@ -115,4 +115,4 @@ const Product = (state = initialState, action) => {
     }
 }
 
-export default Product;
+export default Products;

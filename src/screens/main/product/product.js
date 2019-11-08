@@ -1,149 +1,51 @@
 import React, { Component } from 'react';
+import { useSelector} from 'react-redux';
+import { View, Text, SafeAreaView, ScrollView, Image, TouchableOpacity } from 'react-native';
 
-import { View, FlatList, ActivityIndicator } from "react-native";
-import { ListItem, SearchBar } from "react-native-elements";
-
-class Product extends Component {
-    _isMounted = false;
-    constructor(props) {
-      super(props);
+const Products = (props) => {
+  const dataProducts = useSelector(state => state.product.productList);
   
-      this.state = {
-        loading: false,
-        data: [],
-        page: 1,
-        seed: 1,
-        error: null,
-        refreshing: false,
-        search: ''
-      };
-    }
-  
-    componentDidMount() {
-        this._isMounted = true;
-
-        if (this._isMounted) {
-            this.makeRemoteRequest();
-            console.log("mount");
-        }
-    }
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
-  
-    makeRemoteRequest = () => {
-      const { page, seed } = this.state;
-      const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
-      this.setState({ loading: true });
-  
-      fetch(url)
-        .then(res => res.json())
-        .then(res => {
-          this.setState({
-            data: page === 1 ? res.results : [...this.state.data, ...res.results],
-            error: res.error || null,
-            loading: false,
-            refreshing: false
-          });
-        })
-        .catch(error => {
-          this.setState({ error, loading: false });
-        });
-    };
-  
-    handleRefresh = () => {
-      this.setState(
-        {
-          page: 1,
-          seed: this.state.seed + 1,
-          refreshing: true
-        },
-        () => {
-          this.makeRemoteRequest();
-        }
-      );
-    };
-  
-    handleLoadMore = () => {
-      this.setState(
-        {
-          page: this.state.page + 1
-        },
-        () => {
-          this.makeRemoteRequest();
-        }
-      );
-    };
-  
-    renderSeparator = () => {
-      return (
-        <View
-          style={{
-            height: 1,
-            width: "86%",
-            backgroundColor: "#CED0CE",
-            marginLeft: "14%"
-          }}
-        />
-      );
-    };
-
-    updateSearch = search => {
-        this.setState({ search });
-    };
-  
-    renderHeader = () => {
-      return <SearchBar
-                placeholder="Type Here..."
-                onChangeText={this.updateSearch}
-                lightTheme={true}
-                value={this.state.search}
-            />;
-    };
-  
-    renderFooter = () => {
-      if (!this.state.loading) return null;
-  
-      return (
-        <View
-          style={{
-            paddingVertical: 20,
-            borderTopWidth: 1,
-            borderColor: "#CED0CE"
-          }}
-        >
-          <ActivityIndicator animating size="large" />
+  return(
+    <View style={{ flex: 1, backgroundColor: '#EEECEE' }}>
+        <View style={{flexDirection: 'column'}}>
+          <View style={{marginHorizontal: 17, marginTop: 30, height: 40, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>Product</Text>
+            <Image style={{width: 25, height: 25}} source={require('../../../assets/icon/icon-sorting.png')} />
+          </View>
         </View>
-      );
-    };
-  
-    render() {
-        return (
-            <View style={{flex: 1}}>
-                <FlatList
-                    data={this.state.data}
-                    renderItem={({ item }) => (
-                    <ListItem
-                        roundAvatar
-                        leftAvatar={{ source: {uri: item.picture.thumbnail} }}
-                        title={`${item.name.first} ${item.name.last}`}
-                        subtitle={item.email}
-                        containerStyle={{ borderBottomWidth: 0 }}
-                        chevron
-                    />
-                    )}
-                    keyExtractor={item => item.email}
-                    ItemSeparatorComponent={this.renderSeparator}
-                    ListHeaderComponent={this.renderHeader}
-                    ListFooterComponent={this.renderFooter}
-                    onRefresh={this.handleRefresh}
-                    refreshing={this.state.refreshing}
-                    onEndReached={this.handleLoadMore}
-                    onEndReachedThreshold={5}
-                />
-            </View>
-        );
-    }
+        <View style={{flexDirection: 'column', flex: 1, marginTop: 50}}>
+          <SafeAreaView>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {dataProducts.map((item, index) => (
+              <View style={{marginHorizontal: 17, flexDirection: 'column'}} key={index}>
+                  <View style={{backgroundColor: '#fff', height: 80, marginTop: 15, borderRadius: 10, paddingVertical: 4, paddingHorizontal: 3, flexDirection: 'row'}}>
+                      <Image style={{width: 70, height: 70, borderRadius: 4}} source={require('../../../assets/icon/icon-carts.png')}/>
+                      <View style={{marginHorizontal: 10, flexDirection: 'column'}}>
+                          <Text style={{fontFamily: 'roboto'}}>{item.name}</Text>
+                          <View style={{flexDirection: 'row'}}>
+                              <Text style={{width: 185, fontSize: 12}}>50 stock || Rp.5000</Text>
+                              <View style={{flexDirection: 'column'}}>
+                              <TouchableOpacity
+                                  style={{width: 50, height: 25, backgroundColor: '#2196F3', borderRadius: 10, alignItems: 'center', justifyContent: 'center', marginBottom: 5,}}
+                              >
+                                  <Text style={{fontSize: 11, color: '#fff', fontFamily: 'roboto'}}>Update</Text>
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                  style={{width: 50, height: 25, backgroundColor: '#E95E8B', borderRadius: 10, alignItems: 'center', justifyContent: 'center'}}
+                              >
+                                  <Text style={{fontSize: 11, color: '#fff', fontFamily: 'roboto'}}>Delete</Text>
+                              </TouchableOpacity>
+                              </View>
+                          </View>
+                      </View>
+                  </View>
+              </View>
+              ))}
+            </ScrollView>
+          </SafeAreaView>
+        </View>
+    </View>
+  );
 }
   
-export default Product;
+export default Products;
